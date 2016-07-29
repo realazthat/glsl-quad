@@ -41,7 +41,7 @@
   ],
   "scripts": {
     "mytest": "semistandard | snazzy",
-    "build": "npm run build-script && npm run build-min && npm run build-demo && npm run size",
+    "build": "npm run build-script && npm run build-demo && npm run size",
     "size": "mkdir -p ./www && browserify --full-paths glsl-quad.js | discify > ./www/size.html",
     "build-script": "mkdir -p ./dist && browserify glsl-quad.js --standalone glsl-quad > ./dist/glsl-quad.js",
     "build-demo": "mkdir -p ./www/glsl-quad-demo/ && browserify ./glsl-quad-demo.js | indexhtmlify > ./www/glsl-quad-demo/index.html"
