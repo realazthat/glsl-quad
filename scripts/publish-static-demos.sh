@@ -20,9 +20,9 @@ if [ "$TRAVIS_REPO_SLUG" == "realazthat/glsl-quad" ] && [ "$TRAVIS_PULL_REQUEST"
   touch .nojekyll
   
   git rm -rf --ignore-unmatch "./$TRAVIS_BRANCH/www"
-  mkdir -p "./$TRAVIS_BRANCH/www"
-  cp -Rf "$PROJECT_PATH/www/" "./$TRAVIS_BRANCH/www/"
-  cp -Rf "$PROJECT_PATH/dist/" "./$TRAVIS_BRANCH/dist/"
+  git rm -rf --ignore-unmatch "./$TRAVIS_BRANCH/dist"
+  cp -Rf "$PROJECT_PATH/www/" "./$TRAVIS_BRANCH/."
+  cp -Rf "$PROJECT_PATH/dist/" "./$TRAVIS_BRANCH/."
   git add -f .
   git -c user.email="travis@travis-ci.org" -c user.name="travis-ci" \
         commit -m "Latest 'generated static data' on successful travis build $TRAVIS_BUILD_NUMBER auto-pushed to gh-pages/$TRAVIS_BRANCH"
