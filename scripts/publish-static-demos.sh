@@ -10,7 +10,6 @@ if [ "$TRAVIS_REPO_SLUG" == "realazthat/glsl-quad" ] && [ "$TRAVIS_PULL_REQUEST"
 
   echo -e "Publishing generated static data...\n"
 
-  GENERATED_STUFF_PATH="$PWD/www/"
 
   cd $HOME
   
@@ -22,8 +21,8 @@ if [ "$TRAVIS_REPO_SLUG" == "realazthat/glsl-quad" ] && [ "$TRAVIS_PULL_REQUEST"
   
   git rm -rf --ignore-unmatch "./$TRAVIS_BRANCH/www"
   mkdir -p "./$TRAVIS_BRANCH/www"
-  cp -Rf "$PWD/www/" "./$TRAVIS_BRANCH/www/"
-  cp -Rf "$PWD/dist/" "./$TRAVIS_BRANCH/dist/"
+  cp -Rf "$PROJECT_PATH/www/" "./$TRAVIS_BRANCH/www/"
+  cp -Rf "$PROJECT_PATH/dist/" "./$TRAVIS_BRANCH/dist/"
   git add -f .
   git -c user.email="travis@travis-ci.org" -c user.name="travis-ci" \
         commit -m "Latest 'generated static data' on successful travis build $TRAVIS_BUILD_NUMBER auto-pushed to gh-pages/$TRAVIS_BRANCH"
