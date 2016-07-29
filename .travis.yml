@@ -1,10 +1,8 @@
 language: node_js
 node_js:
-  - "6.3"
+  - '6.3'
 env:
   global:
-    #GH_TOKEN
-    - secure: "icJ5m2++XoT+K7hIcopskMNNSciJxwbR9Z/3c1iTHvOxYBcF5gVEphnfNIiczBZWnFOxplm4DWrZwobUKfYCsMfvet2YC1nFlmEv7HvdPJT9V8bYTwGnkFFTcFMUryLlFqavOMNvyE5DyinNQZVX5BMr7bsBbrKzbCtatfkJMbdQFE8oyRcXDTQ+lELhtJm8eD3Fj4CnndNQi9b6KgpEDdNP19yAXxpkxvxm779zveSxslF9VTToKOAYJ2UCbhBsSuDZdTUO0Zwh4lI1ujFVyesn/bec4PmyuAQEVlPg6r7gHK5RdbUMi9Ci6VWrwEmITyb+VZsKdvFuZ0Q6BRmQVG8ZCdsqMAG9yu5mpt1gCSQgf1k73UYwgwRZPVhWt3PGcXy5fRx9Yrvz6BQaytH0ithFv9W7gCJztfnxihO0YyV4AG/eTln61aD/whf6m8AidPlrgqheH4mTKVEoOYBwKCsnC4LVIGgU/8PJoiHflNYQc0yVvtmhd4lvU9esoCA4XJ4oX1TS/qYDrosf/fNI2ji1+T3aKBViqeR5Z6sL4i9QDD3VMq4eSwhIAWsjppdBspbzJuQMtYkV4288W/u8Y9+B/5YFh1djmjbQpe2u4Od81TL9AAEKClWtK+RkTDxjFaozHjj0y/vixI34Jgv3toDBQkOOzB73WAPISH+rDAg="
     - CXX=g++-4.8
 addons:
   apt:
@@ -20,3 +18,6 @@ script:
   - npm run size
   - npm run build
   - bash scripts/publish-static-demos.sh
+GH_TOKEN:
+  - secure: >-
+      ofN7TY5jJp+/0+JeVYe18moqgeu19VSR32VAeMcPKsy76wxCN2o0LBi997EGbCYqjdZTG2sZsgtU8NhQ0NI24X1w9Se1nziJ7WSntfUpHOfRAD/OtT0kYupIsZVuvUOVYVWk3Xc5bzAEGBw2JNczSpGEgCph4VSKf9l8Sv0MdC7HVcAx8o6kOvgNlu8yC5SFgieDt9AvsDeVY4/cSnq6iNsh9lPAN5kOZz345hgjcHNqluYKhWN0qOLEdmqZuuBGoNSu6B5KiwyKzD8FBeOolvVirLIoPNka0XbLDEFbMojGC+SpST5YPlEBZNZ6nHzV9pauCrT/xMDvfZCqLFrxEyjP1c5TXeBziKKCNiKVtdfT4AouxP2o/oRb5sRKisnqCyP/4Y8k7RHlfqgww5VjnDRW9vBFOD4sKo9kvXNNkanQ/vzpf9G6wmyREXgSrVhky3Mz0EkxQCFqNoIlpjIe84We0N9iXxMhdOWY29f1Ljo5KnVwDgctEEUMbyQnVMPxH2ApxkwOyBF/3GzBPI9mPxAZoKQwRJ5h6Fb/BueoLADawDkEz4OEzm+eLzJXZFhREAlHJ73GNUq9YuWA10gHrtAiEjTJVX384AJyu/tmiuJx3cTLLZlPfWBRGWYNM6g1T05WKqxkY0LWlkALeaON9ypGwNiU5YFh/N9+FwLOBHo=
