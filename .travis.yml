@@ -12,3 +12,4 @@ script:
   - npm run mytest
   - npm run size
   - npm run build
+  - bash scripts/publish-static-demos.sh
