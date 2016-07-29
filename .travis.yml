@@ -1,11 +1,11 @@
 language: node_js
 node_js:
-   - "6.3"
+  - "6.3"
 env:
   global:
     #GH_TOKEN
     - secure: "icJ5m2++XoT+K7hIcopskMNNSciJxwbR9Z/3c1iTHvOxYBcF5gVEphnfNIiczBZWnFOxplm4DWrZwobUKfYCsMfvet2YC1nFlmEv7HvdPJT9V8bYTwGnkFFTcFMUryLlFqavOMNvyE5DyinNQZVX5BMr7bsBbrKzbCtatfkJMbdQFE8oyRcXDTQ+lELhtJm8eD3Fj4CnndNQi9b6KgpEDdNP19yAXxpkxvxm779zveSxslF9VTToKOAYJ2UCbhBsSuDZdTUO0Zwh4lI1ujFVyesn/bec4PmyuAQEVlPg6r7gHK5RdbUMi9Ci6VWrwEmITyb+VZsKdvFuZ0Q6BRmQVG8ZCdsqMAG9yu5mpt1gCSQgf1k73UYwgwRZPVhWt3PGcXy5fRx9Yrvz6BQaytH0ithFv9W7gCJztfnxihO0YyV4AG/eTln61aD/whf6m8AidPlrgqheH4mTKVEoOYBwKCsnC4LVIGgU/8PJoiHflNYQc0yVvtmhd4lvU9esoCA4XJ4oX1TS/qYDrosf/fNI2ji1+T3aKBViqeR5Z6sL4i9QDD3VMq4eSwhIAWsjppdBspbzJuQMtYkV4288W/u8Y9+B/5YFh1djmjbQpe2u4Od81TL9AAEKClWtK+RkTDxjFaozHjj0y/vixI34Jgv3toDBQkOOzB73WAPISH+rDAg="
-  - CXX=g++-4.8
+    - CXX=g++-4.8
 addons:
   apt:
     sources:
