@@ -1,0 +1,37 @@
+{
+  "name": "glsl-quad",
+  "version": "0.1.0",
+  "description": "glsl-quad provides simple utilities (simple quad mesh, shaders, etc.) for image processing with webgl.",
+  "main": "glsl-quad.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/realazthat/glsl-quad.git"
+  },
+  "bugs": {
+    "url": "https://github.com/realazthat/glsl-quad/issues"
+  },
+  "author": "Azriel Fasten",
+  "license": "MIT",
+  "standard": {
+    "ignore": [
+      "dist/*",
+      "www/*"
+    ]
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "regl": "^0.10.0",
+    "resl": "^1.0.1"
+  },
+  "keywords": [
+    "webgl",
+    "gl",
+    "graphics",
+    "computer graphics",
+    "opengl",
+    "glsl",
+    "quad",
+    "image processing"
+  ]
+
+}
