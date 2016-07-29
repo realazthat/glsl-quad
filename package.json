@@ -10,18 +10,23 @@
   "bugs": {
     "url": "https://github.com/realazthat/glsl-quad/issues"
   },
+  "homepage": "https://github.com/realazthat/glsl-quad",
   "author": "Azriel Fasten",
   "license": "MIT",
-  "standard": {
+  "semistandard": {
     "ignore": [
       "dist/*",
       "www/*"
     ]
   },
-  "dependencies": {},
+  "dependencies": {
+  },
   "devDependencies": {
+    "disc": "^1.3.2",
+    "indexhtmlify": "^1.3.0",
     "regl": "^0.10.0",
-    "resl": "^1.0.1"
+    "resl": "^1.0.1",
+    "snazzy": "^4.0.0"
   },
   "keywords": [
     "webgl",
@@ -31,7 +36,14 @@
     "opengl",
     "glsl",
     "quad",
+    "shader",
     "image processing"
-  ]
-
+  ],
+  "scripts": {
+    "mytest": "semistandard | snazzy",
+    "build": "npm run build-script && npm run build-min && npm run build-demo && npm run size",
+    "size": "mkdir -p ./www && browserify --full-paths glsl-quad.js | discify > ./www/size.html",
+    "build-script": "mkdir -p ./dist && browserify glsl-quad.js --standalone glsl-quad > ./dist/glsl-quad.js",
+    "build-demo": "mkdir -p ./www/glsl-quad-demo/ && browserify ./glsl-quad-demo.js | indexhtmlify > ./www/glsl-quad-demo/index.html"
+  }
 }
