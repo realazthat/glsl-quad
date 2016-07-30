@@ -57,7 +57,7 @@ DY9Lq7eW6Mjk29/Bk/YD+vO7Bc/D/rKULAqSbj80tHrOehPC9mjY
 /krhkBeBF4HvZE6CgXRJgeW3wAPYMf0IwO1NO/RL2BhgJMCvApwK
 QAnwJMCvApwKQAnwJMCvApwNQGYE/vmRowbCgUYLpbQHvJMi8gSN
 TpmLsGxGWsH9Aq90gwfW1gwv9zx+qUr0mWD8hCps/uE5DSC/pgVD
-kvIARVAAAAAElFTkSuQmCC`.replace(' ', '').replace('\n', '').replace('\r', '');
+kvIARVAAAAAElFTkSuQmCC`.replace(/\s*/g, '');
 
 const bitmaps = {
   directions: {uri: directionsDataUri}
