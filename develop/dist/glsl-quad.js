@@ -47,7 +47,7 @@ const fshader = `
   }
 `;
 
-const show_uvs_fshader = `
+const showUVsFshader = `
   precision mediump float;
   varying vec2 v_uv;
   void main () {
@@ -56,7 +56,7 @@ const show_uvs_fshader = `
 `;
 
 
-const show_positions_vshader = `
+const showPositionsVshader = `
   precision mediump float;
   attribute vec2 a_position;
 
@@ -70,7 +70,7 @@ const show_positions_vshader = `
   }
 `;
 
-const show_positions_fshader = `
+const showPositionsFshader = `
   precision mediump float;
   varying vec2 v_uv;
   void main () {
@@ -95,12 +95,12 @@ const bitmaps = {
   directions: {uri: directionsDataUri}
 };
 
-module.exports = {verts, indices, uvs, shader: {vert: vshader, frag: fshader}
-                  , show: {
-                    uvs: {frag: show_uvs_fshader, vert: vshader},
-                    positions: {frag: show_positions_fshader, vert: show_positions_vshader}
-                  }
-                  , bitmaps};
+module.exports = {verts, indices, uvs, shader: {vert: vshader, frag: fshader},
+                  show: {
+                    uvs: {frag: showUVsFshader, vert: vshader},
+                    positions: {frag: showPositionsFshader, vert: showPositionsVshader}
+                  },
+                  bitmaps};
 
 },{}]},{},[1])(1)
 });
