@@ -104,7 +104,7 @@ An excerpt:
       elements: quad.indices,
       uniforms: {
         u_tex: regl.prop('texture'),
-        u_clip_y: -1
+        u_clip_y: 1
       }
     });
 
