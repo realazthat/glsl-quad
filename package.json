@@ -19,11 +19,11 @@
       "www/*"
     ]
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "disc": "^1.3.2",
     "indexhtmlify": "^1.3.0",
+    "jquery-browserify": "^1.8.1",
     "regl": "^0.10.0",
     "resl": "^1.0.1",
     "semistandard": "~8.0.0",
@@ -42,9 +42,12 @@
   ],
   "scripts": {
     "mytest": "semistandard | snazzy",
-    "build": "npm run build-script && npm run build-demo && npm run size",
+    "build": "npm run build-script && npm run size && npm run build-demo && npm run build-pos-demo && npm run build-uv-demo && npm run build-quad-vertical-flip-tests",
     "size": "mkdir -p ./www && browserify --full-paths glsl-quad.js | discify > ./www/size.html",
     "build-script": "mkdir -p ./dist && browserify glsl-quad.js --standalone glsl-quad > ./dist/glsl-quad.js",
-    "build-demo": "mkdir -p ./www/glsl-quad-demo/ && browserify ./glsl-quad-demo.js | indexhtmlify > ./www/glsl-quad-demo/index.html"
+    "build-demo": "mkdir -p ./www/glsl-quad-demo/ && browserify ./glsl-quad-demo.js | indexhtmlify > ./www/glsl-quad-demo/index.html",
+    "build-pos-demo": "mkdir -p ./www/glsl-quad-pos-demo/ && browserify ./glsl-quad-pos-demo.js | indexhtmlify > ./www/glsl-quad-pos-demo/index.html",
+    "build-uv-demo": "mkdir -p ./www/glsl-quad-uv-demo/ && browserify ./glsl-quad-uv-demo.js | indexhtmlify > ./www/glsl-quad-uv-demo/index.html",
+    "build-quad-vertical-flip-tests": "mkdir -p ./www/glsl-quad-vertical-flip-tests/ && browserify ./glsl-quad-vertical-flip-tests.js | indexhtmlify > ./www/glsl-quad-vertical-flip-tests/index.html"
   }
 }
