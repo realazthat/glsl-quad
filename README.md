@@ -36,9 +36,16 @@ To run the demo, run:
 
 Results:
 
-branch | demo
--------|-------
-master | [glsl-quad-demo](https://realazthat.github.io/glsl-quad/master/www/glsl-quad-demo/index.html)
+branch  | demo
+--------|-------
+master  | [glsl-quad-demo](https://realazthat.github.io/glsl-quad/master/www/glsl-quad-demo/index.html)
+        | [glsl-quad-uv-demo](https://realazthat.github.io/glsl-quad/master/www/glsl-quad-uv-demo/index.html)
+        | [glsl-quad-pos-demo](https://realazthat.github.io/glsl-quad/master/www/glsl-quad-pos-demo/index.html)
+        | [glsl-quad-vertical-flip-tests](https://realazthat.github.io/glsl-quad/master/www/glsl-quad-vertical-flip-tests/index.html)
+develop | [glsl-quad-demo](https://realazthat.github.io/glsl-quad/develop/www/glsl-quad-demo/index.html)
+        | [glsl-quad-uv-demo](https://realazthat.github.io/glsl-quad/develop/www/glsl-quad-uv-demo/index.html)
+        | [glsl-quad-pos-demo](https://realazthat.github.io/glsl-quad/develop/www/glsl-quad-pos-demo/index.html)
+        | [glsl-quad-vertical-flip-tests](https://realazthat.github.io/glsl-quad/develop/www/glsl-quad-vertical-flip-tests/index.html)
 
 ####Docs
 
