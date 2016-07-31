@@ -1,6 +1,6 @@
 {
   "name": "glsl-quad",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "glsl-quad provides simple utilities (simple quad mesh, shaders, etc.) for image processing with webgl.",
   "main": "glsl-quad.js",
   "repository": {
