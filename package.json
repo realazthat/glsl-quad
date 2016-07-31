@@ -23,6 +23,7 @@
   "devDependencies": {
     "disc": "^1.3.2",
     "indexhtmlify": "^1.3.0",
+    "jquery-browserify": "^1.8.1",
     "regl": "^0.10.0",
     "resl": "^1.0.1",
     "semistandard": "~8.0.0",
