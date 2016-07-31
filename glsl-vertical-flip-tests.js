@@ -1,6 +1,4 @@
 
-
-
 const quad = require('./glsl-quad.js');
 const $ = require('jquery-browserify');
 
@@ -9,29 +7,25 @@ const regl = require('regl')({
   attributes: {preserveDrawingBuffer: true}
 });
 
-
-
-function read_corners({fbo,regl}){
-
+function readCorners ({fbo, regl}) {
   let bindFbo = regl({framebuffer: fbo});
 
   let width = fbo ? fbo.color[0].width : regl.drawingBufferWidth;
   let height = fbo ? fbo.color[0].height : regl.drawingBufferHeight;
 
   let corners = [];
-  bindFbo(function(){
+  bindFbo(function () {
     let data = regl.read();
 
+    let ulIndex = 4 * (0);
+    let urIndex = 4 * (width * 0 + width - 1);
+    let llIndex = 4 * (width * (height - 1) + 0);
+    let lrIndex = 4 * (width * (height - 1) + width - 1);
 
-    let ul_index = 4*(0);
-    let ur_index = 4*(width*0 + width - 1);
-    let ll_index = 4*(width*(height-1) + 0);
-    let lr_index = 4*(width*(height-1) + width-1);
-
-    corners.push(data.slice(ul_index,ul_index+4));
-    corners.push(data.slice(ur_index,ur_index+4));
-    corners.push(data.slice(ll_index,ll_index+4));
-    corners.push(data.slice(lr_index,lr_index+4));
+    corners.push(data.slice(ulIndex, ulIndex + 4));
+    corners.push(data.slice(urIndex, urIndex + 4));
+    corners.push(data.slice(llIndex, llIndex + 4));
+    corners.push(data.slice(lrIndex, lrIndex + 4));
     // console.log('data:',data);
     // console.log('width:',width);
     // console.log('height:',height);
@@ -43,16 +37,14 @@ function read_corners({fbo,regl}){
     // console.log('corners[1]:',corners[1]);
     // console.log('corners:',corners);
     // console.log('data:',data);
-    
   });
   return corners;
 }
 
-function test({from_src, from_to_fbo_clip_y, fbos, pingpongs, fbo_to_next_fbo_clip_y, to_dst, clip_y_to_dst, regl}){
-
+function test ({fromSrc, fromSrcToFBOClipY, fbos, pingpongs, FBOToNextFBOClipY, toDst, clipYToDst, regl}) {
   const draw = regl({
-    frag: quad.shader.frag,
     vert: quad.shader.vert,
+    frag: quad.shader.frag,
     attributes: {
       a_uv: quad.uvs,
       a_position: quad.verts
@@ -67,91 +59,67 @@ function test({from_src, from_to_fbo_clip_y, fbos, pingpongs, fbo_to_next_fbo_cl
 
   let result = [];
 
-  if (pingpongs > 0)
-  {
-    let current_index = 0;
-    draw({tex: from_src, fbo: fbos[current_index], clip_y: from_to_fbo_clip_y});
+  if (pingpongs > 0) {
+    let currentIndex = 0;
+    draw({tex: fromSrc, fbo: fbos[currentIndex], clip_y: fromSrcToFBOClipY});
 
     // read the corners from the fbo
-    let corners = read_corners({fbo: fbos[current_index], regl});
-    result.push( {corners: corners, description: `drew to the first FBO`, t: Date.now()} );
-    
+    let corners = readCorners({fbo: fbos[currentIndex], regl});
+    result.push({corners: corners, description: 'drew to the first FBO', t: Date.now()});
 
     // now ping pong
-    for (let pingpong = 1; pingpong < pingpongs; ++pingpong)
-    {
-      let current_from_texture = fbos[current_index].color[0];
+    for (let pingpong = 1; pingpong < pingpongs; ++pingpong) {
+      let currentFromTexture = fbos[currentIndex].color[0];
 
-      current_index = (current_index + 1) % fbos.length;
-      draw({tex: current_from_texture, fbo: fbos[current_index], clip_y: fbo_to_next_fbo_clip_y});
+      currentIndex = (currentIndex + 1) % fbos.length;
+      draw({tex: currentFromTexture, fbo: fbos[currentIndex], clip_y: FBOToNextFBOClipY});
 
-      ///record the corners.
-      let corners = read_corners({fbo: fbos[current_index], regl});
-      result.push( {corners: corners, description: `drew to the ${pingpong}-th FBO`, t: Date.now()} );
+      // record the corners.
+      let corners = readCorners({fbo: fbos[currentIndex], regl});
+      result.push({corners: corners, description: `drew to the ${pingpong}-th FBO`, t: Date.now()});
     }
 
-
     // draw to the destination
-    let current_from_texture = fbos[current_index].color[0];
-    draw({tex: current_from_texture, fbo: to_dst, clip_y: clip_y_to_dst});
+    let currentFromTexture = fbos[currentIndex].color[0];
+    draw({tex: currentFromTexture, fbo: toDst, clip_y: clipYToDst});
 
-    if (to_dst) {
-      let corners = read_corners({fbo: to_dst, regl});
-      result.push( {corners: corners, description: `drew to the dst FBO`, t: Date.now()} );
+    if (toDst) {
+      let corners = readCorners({fbo: toDst, regl});
+      result.push({corners: corners, description: 'drew to the dst FBO', t: Date.now()});
     } else {
-
-      let corners = read_corners({regl});
-      result.push( {corners: corners, description: `drew to the dst renderbuffer`, t: Date.now()});
-
+      let corners = readCorners({regl});
+      result.push({corners: corners, description: 'drew to the dst renderbuffer', t: Date.now()});
     }
   } else {
     // no pingpongs
 
-
-    draw({tex: from_src, fbo: to_dst, clip_y: clip_y_to_dst});
-    if (to_dst) {
-      let corners = read_corners({fbo: to_dst, regl});
-      result.push( {corners: corners, description: `drew to the dst FBO`, t: Date.now()});
+    draw({tex: fromSrc, fbo: toDst, clip_y: clipYToDst});
+    if (toDst) {
+      let corners = readCorners({fbo: toDst, regl});
+      result.push({corners: corners, description: 'drew to the dst FBO', t: Date.now()});
     } else {
-      let corners = read_corners({regl});
-      result.push( {corners: corners, description: `drew to the dst renderbuffer`, t: Date.now()});
+      let corners = readCorners({regl});
+      result.push({corners: corners, description: 'drew to the dst renderbuffer', t: Date.now()});
     }
-
   }
 
   return result;
 }
 
-
-
-const drawToScreen = regl({
-  frag: quad.shader.frag,
-  vert: quad.shader.vert,
-  attributes: {
-    a_position: quad.verts,
-    u_uv: quad.uvs
-  },
-  elements: quad.indices,
-  uniforms: {
-    u_tex: regl.prop('texture'),
-    u_clip_y: regl.prop('clip_y'),
-  }
-});
-
-function make_fbos({num_fbos, width, height}){
+function makeFbos ({numFBOs, width, height}) {
   let fbos = [];
-  for (let fbo_index = 0; fbo_index < num_fbos; ++fbo_index) {
-    fbos.push( regl.framebuffer({
-            color: regl.texture({
-              width: width,
-              height: height,
-              stencil: false,
-              format: 'rgba',
-              type: 'uint8',
-              depth: false,
-              wrap: 'clamp'
-            })
-          }));
+  for (let fboIndex = 0; fboIndex < numFBOs; ++fboIndex) {
+    fbos.push(regl.framebuffer({
+      color: regl.texture({
+        width: width,
+        height: height,
+        stencil: false,
+        format: 'rgba',
+        type: 'uint8',
+        depth: false,
+        wrap: 'clamp'
+      })
+    }));
   }
   return fbos;
 }
@@ -168,9 +136,8 @@ resl({
       })
     }
   },
-  onDone: ({texture, digits_texture}) => {
-
-    let from_src = regl.texture({
+  onDone: ({texture}) => {
+    let fromSrc = regl.texture({
       width: 2,
       height: 2,
       stencil: false,
@@ -178,41 +145,43 @@ resl({
       type: 'uint8',
       depth: false,
       wrap: 'clamp',
-      data: new Uint8Array([1,1,1,1,2,2,2,2,3,3,3,3,4,4,4,4]),
+      data: new Uint8Array([1, 1, 1, 1,
+                            2, 2, 2, 2,
+                            3, 3, 3, 3,
+                            4, 4, 4, 4]),
       mag: 'nearest',
       min: 'nearest'
     });
 
+    // let fbo_pool = makeFbos({numFBOs: 5, width: fromSrc.width, height: fromSrc.height});
 
-    // let fbo_pool = make_fbos({num_fbos: 5, width: from_src.width, height: from_src.height});
+    let testParams = [];
+    let testResults = [];
 
-    let test_params = [];
-    let test_results = [];
-
-    for (let num_fbos = 2; num_fbos < 5; ++num_fbos) {
-      for (let clip_y_to_dst of [-1,1]) {
-        for (let from_to_fbo_clip_y of [-1,1]) {
+    for (let numFBOs = 2; numFBOs < 5; ++numFBOs) {
+      for (let clipYToDst of [-1, 1]) {
+        for (let fromSrcToFBOClipY of [-1, 1]) {
           for (let pingpongs = 0; pingpongs < 10; ++pingpongs) {
-            for (let fbo_to_next_fbo_clip_y of [-1,1]) {
-              let to_dst = null;
+            for (let FBOToNextFBOClipY of [-1, 1]) {
+              let toDst = null;
 
-              let fbos = make_fbos({num_fbos, width: from_src.width, height: from_src.height});
-              // let fbos = fbo_pool.slice(0,num_fbos);
+              let fbos = makeFbos({numFBOs, width: fromSrc.width, height: fromSrc.height});
+              // let fbos = fbo_pool.slice(0,numFBOs);
 
-              let params = {from_src, from_to_fbo_clip_y, fbos, pingpongs, fbo_to_next_fbo_clip_y, to_dst, clip_y_to_dst, regl};
-              test_params.push( params );
+              let params = {fromSrc, fromSrcToFBOClipY, fbos, pingpongs, FBOToNextFBOClipY, toDst, clipYToDst, regl};
+              testParams.push(params);
 
               regl.clear({
                 color: [0, 0, 0, 1],
                 depth: 1,
                 stencil: 0
-              })
+              });
 
-              test_results.push( test(params) );
+              testResults.push(test(params));
 
-              fbos.forEach(function(fbo){
+              fbos.forEach(function (fbo) {
                 fbo.destroy();
-              })
+              });
             }
           }
         }
@@ -220,64 +189,55 @@ resl({
     }
 
     let $table = $('<table>').appendTo('body');
-    test_results.forEach(function(result, i){
-      let params = test_params[i];
+    testResults.forEach(function (result, i) {
+      let params = testParams[i];
 
-      let $desc_tr = $('<tr>').appendTo($table);
-      let $corners_tr = $('<tr>').appendTo($table);
+      let $descTR = $('<tr>').appendTo($table);
+      let $cornersTR = $('<tr>').appendTo($table);
 
-      $params_table = $('<table>').appendTo($('<td>').appendTo($desc_tr));
-      $('<td>').appendTo($corners_tr);
+      let $paramsTABLE = $('<table>').appendTo($('<td>').appendTo($descTR));
+      $('<td>').appendTo($cornersTR);
 
-      $tr = $('<tr>').appendTo($params_table);
+      let $tr = $('<tr>').appendTo($paramsTABLE);
       $('<td>').text('fbos').appendTo($tr);
       $('<td>').text(params.fbos.length).appendTo($tr);
 
-      $tr = $('<tr>').appendTo($params_table);
+      $tr = $('<tr>').appendTo($paramsTABLE);
       $('<td>').text('pingpongs').appendTo($tr);
       $('<td>').text(params.pingpongs).appendTo($tr);
 
-
-      $tr = $('<tr>').appendTo($params_table);
+      $tr = $('<tr>').appendTo($paramsTABLE);
       $('<td>').text('Source to FBO clip_y').appendTo($tr);
-      $('<td>').text(params.from_to_fbo_clip_y).appendTo($tr);
+      $('<td>').text(params.fromSrcToFBOClipY).appendTo($tr);
 
-      $tr = $('<tr>').appendTo($params_table);
+      $tr = $('<tr>').appendTo($paramsTABLE);
       $('<td>').text('FBO to FBO clip_y').appendTo($tr);
-      $('<td>').text(params.fbo_to_next_fbo_clip_y).appendTo($tr);
+      $('<td>').text(params.FBOToNextFBOClipY).appendTo($tr);
 
-      $tr = $('<tr>').appendTo($params_table);
+      $tr = $('<tr>').appendTo($paramsTABLE);
       $('<td>').text('X to destination clip_y').appendTo($tr);
-      $('<td>').text(params.clip_y_to_dst).appendTo($tr);
+      $('<td>').text(params.clipYToDst).appendTo($tr);
 
-      $tr = $('<tr>').appendTo($params_table);
+      $tr = $('<tr>').appendTo($paramsTABLE);
       $('<td colspan="2">')
-        .text(`${params.fbos.length},${params.pingpongs}, ${params.from_to_fbo_clip_y}, ${params.fbo_to_next_fbo_clip_y}, ${params.clip_y_to_dst}`)
+        .text(`${params.fbos.length},${params.pingpongs}, ${params.fromSrcToFBOClipY}, ${params.FBOToNextFBOClipY}, ${params.clipYToDst}`)
         .appendTo($tr);
 
+      for (let transition of result) {
+        let $descTD = $('<td>').appendTo($descTR);
+        let $cornersTD = $('<td>').appendTo($cornersTR);
 
-
-
-
-      for (let transition of result){
-        let $desc_td = $('<td>').appendTo($desc_tr);
-        let $corners_td = $('<td>').appendTo($corners_tr);
-
-        $desc_td.text(transition.description + ' @' + transition.t);
+        $descTD.text(transition.description + ' @' + transition.t);
 
         let corners = transition.corners;
 
-        corners = corners.map(function(color){
-                                return color[0];
-                              }).join(',');
-        $corners_td.text(corners);
+        corners = corners.map(function (color) {
+          return color[0];
+        }).join(',');
+        $cornersTD.text(corners);
       }
-
     });
 
-
     $table.find('td').css('border', '1px solid black');
-
-
   }
 });
