@@ -22,6 +22,7 @@ if [ "$TRAVIS_REPO_SLUG" == "realazthat/glsl-quad" ] && [ "$TRAVIS_PULL_REQUEST"
   git rm -rf --ignore-unmatch "./$TRAVIS_BRANCH/www"
   git rm -rf --ignore-unmatch "./$TRAVIS_BRANCH/dist"
   mkdir -p "./$TRAVIS_BRANCH/."
+  echo $TRAVIS_BUILD_NUMBER > "./$TRAVIS_BRANCH/travis_build_number"
   cp -Rf "$PROJECT_PATH/www/" "./$TRAVIS_BRANCH/."
   cp -Rf "$PROJECT_PATH/dist/" "./$TRAVIS_BRANCH/."
   git add -f .
