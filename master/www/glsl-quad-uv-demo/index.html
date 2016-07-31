@@ -29,13 +29,18 @@ resl({
   },
   onDone: ({texture}) => {
     const drawTexture = regl({
-      frag: quad.shader.frag,
-      vert: quad.shader.vert,
+      vert: quad.show.uvs.vert,
+      frag: quad.show.uvs.frag,
       attributes: {
         a_position: quad.verts,
         a_uv: quad.uvs
       },
       elements: quad.indices,
+      frontFace: 'ccw',
+      cull: {
+        enable: true,
+        face: 'back'
+      },
       uniforms: {
         u_tex: regl.prop('texture'),
         // Use a negative y, webgl display works upside down. I think.
