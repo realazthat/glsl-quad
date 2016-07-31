@@ -46,6 +46,37 @@ const fshader = `
   }
 `;
 
+const show_uvs_fshader = `
+  precision mediump float;
+  varying vec2 v_uv;
+  void main () {
+    gl_FragColor = vec4(v_uv,0,1);
+  }
+`;
+
+
+const show_positions_vshader = `
+  precision mediump float;
+  attribute vec2 a_position;
+
+  uniform float u_clip_y;
+
+  varying vec2 v_uv;
+  
+  void main() {
+    gl_Position = vec4(a_position * vec2(1,u_clip_y), 0, 1);
+    v_uv = gl_Position.xy;
+  }
+`;
+
+const show_positions_fshader = `
+  precision mediump float;
+  varying vec2 v_uv;
+  void main () {
+    gl_FragColor = vec4(v_uv,0,1);
+  }
+`;
+
 const directionsDataUri = `
 data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAA
 BACAIAAAAlC+aJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQ
@@ -63,4 +94,9 @@ const bitmaps = {
   directions: {uri: directionsDataUri}
 };
 
-module.exports = {verts, indices, uvs, shader: {vert: vshader, frag: fshader}, bitmaps};
+module.exports = {verts, indices, uvs, shader: {vert: vshader, frag: fshader}
+                  , show: {
+                    uvs: {frag: show_uvs_fshader, vert: vshader},
+                    positions: {frag: show_positions_fshader, vert: show_positions_vshader}
+                  }
+                  , bitmaps};
