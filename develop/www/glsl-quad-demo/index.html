@@ -8862,7 +8862,6 @@ module.exports = function resl (config) {
       } else {
         loader.progress = 0.75 * loader.progress + 0.25
       }
-      loader.ready = request.stream
       notifyProgress(name)
     }
 
@@ -8895,7 +8894,20 @@ module.exports = function resl (config) {
     if (request.type === 'image') {
       element.addEventListener('load', onComplete)
     } else {
-      element.addEventListener('canplay', onComplete)
+      var canPlay = false
+      var loadedMetaData = false
+      element.addEventListener('loadedmetadata', function () {
+        loadedMetaData = true
+        if (canPlay) {
+          onComplete()
+        }
+      })
+      element.addEventListener('canplay', function () {
+        canPlay = true
+        if (loadedMetaData) {
+          onComplete()
+        }
+      })
     }
     element.addEventListener('error', onError)
 
@@ -9071,6 +9083,12 @@ module.exports = function resl (config) {
         onProgress(progress / pending.length, message)
       }
     }
+  }
+
+  if (pending.length === 0) {
+    setTimeout(function () {
+      notifyProgress('done')
+    }, 1)
   }
 }
 
